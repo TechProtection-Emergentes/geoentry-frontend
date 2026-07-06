@@ -10,7 +10,8 @@ import {
   User,
   LogOut,
   Globe,
-  HelpCircle
+  HelpCircle,
+  BrainCircuit
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
@@ -22,6 +23,7 @@ const navigationItems = [
   { name: 'Dispositivos', href: '/dispositivos', icon: Smartphone },
   { name: 'Eventos', href: '/eventos', icon: Activity },
   { name: 'Analíticas', href: '/analiticas', icon: BarChart3 },
+  { name: 'Decisiones IA', href: '/ia-logs', icon: BrainCircuit },
   { name: 'Soporte', href: '/soporte', icon: HelpCircle },
 ];
 
