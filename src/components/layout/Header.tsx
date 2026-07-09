@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { HeaderAlerts } from './HeaderAlerts';
 
 export function Header() {
   const { user } = useAuth();
@@ -26,6 +27,7 @@ export function Header() {
       </div>
       
       <div className="flex items-center space-x-4">
+        <HeaderAlerts />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button

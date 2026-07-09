@@ -12,7 +12,8 @@ import {
   Globe,
   HelpCircle,
   BrainCircuit,
-  CreditCard
+  CreditCard,
+  Users
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
@@ -27,6 +28,7 @@ const navigationItems = [
   { name: 'Decisiones IA', href: '/ia-logs', icon: BrainCircuit },
   { name: 'Facturación', href: '/facturacion', icon: CreditCard },
   { name: 'Soporte', href: '/soporte', icon: HelpCircle },
+  { name: 'Familia', href: '/familia', icon: Users },
   { name: 'Mi Perfil', href: '/perfil', icon: User },
 ];
 
