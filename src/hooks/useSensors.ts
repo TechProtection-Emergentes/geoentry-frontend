@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 interface Sensor {
   id: string;
   name: string;
-  sensor_type: 'led_tv' | 'smart_light' | 'air_conditioner' | 'coffee_maker';
+  sensor_type: 'led_tv' | 'smart_light' | 'air_conditioner' | 'coffee_maker' | 'smart_lock';
   isActive: boolean;
   user_id: string;
   created_at: string;
@@ -68,7 +68,8 @@ export const getSensorTypeName = (type: string): string => {
     led_tv: 'Smart TV',
     smart_light: 'Luz Inteligente',
     air_conditioner: 'Aire Acondicionado',
-    coffee_maker: 'Cafetera',
+    coffee_maker: 'Cafetera Inteligente',
+    smart_lock: 'Cerradura Inteligente'
   };
   return typeNames[type] || type;
 };
@@ -80,6 +81,7 @@ export const getSensorTypeIcon = (type: string): string => {
     smart_light: '💡',
     air_conditioner: '❄️',
     coffee_maker: '☕',
+    smart_lock: '🔒'
   };
   return typeIcons[type] || '🔌';
 };
