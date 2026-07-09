@@ -1,11 +1,17 @@
-import { BrainCircuit, Activity, Bot, Zap, CheckCircle2, AlertTriangle, Info } from 'lucide-react';
+import { BrainCircuit, Activity, Bot, Zap, CheckCircle2, AlertTriangle, Info, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useAILogs } from '@/hooks/useAILogs';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { useState } from 'react';
 
 export default function AILogs() {
   const { data: logs = [], isLoading, error } = useAILogs();
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const ITEMS_PER_PAGE = 10;
+  const totalPages = Math.ceil(logs.length / ITEMS_PER_PAGE);
+  const currentLogs = logs.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 
   if (isLoading) {
     return (
@@ -101,13 +107,13 @@ export default function AILogs() {
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
-            {logs.length === 0 ? (
+            {currentLogs.length === 0 ? (
               <div className="text-center py-8">
                 <BrainCircuit className="h-12 w-12 text-geo-text-muted mx-auto mb-4" />
                 <p className="text-geo-text-muted">No hay decisiones registradas aún.</p>
               </div>
             ) : (
-              logs.map((log) => {
+              currentLogs.map((log) => {
                 const isHighConfidence = (log.ai_confidence || 0) >= 0.7;
                 
                 return (
@@ -177,6 +183,31 @@ export default function AILogs() {
                   </div>
                 );
               })
+            )}
+            
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-between pt-4 border-t border-geo-gray-light mt-6">
+                <span className="text-sm text-geo-text-muted">
+                  Mostrando {(currentPage - 1) * ITEMS_PER_PAGE + 1} a {Math.min(currentPage * ITEMS_PER_PAGE, logs.length)} de {logs.length} inferencias
+                </span>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="p-2 bg-geo-darker border border-geo-gray-light rounded-md text-white hover:bg-geo-gray disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="p-2 bg-geo-darker border border-geo-gray-light rounded-md text-white hover:bg-geo-gray disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         </CardContent>

@@ -1,5 +1,5 @@
 
-import { Calendar, ArrowUp, ArrowDown, MapPin } from 'lucide-react';
+import { Calendar, ArrowUp, ArrowDown, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useEvents, useEventStats } from '@/hooks/useEvents';
 import { useDevices } from '@/hooks/useDevices';
@@ -55,6 +55,11 @@ export default function Events() {
 
     return matchesSearch && matchesType && matchesLocation && matchesDevice;
   });
+
+  const ITEMS_PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(filteredEvents.length / ITEMS_PER_PAGE);
+  const currentEvents = filteredEvents.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 
   if (isLoading) {
     return (
@@ -158,7 +163,7 @@ export default function Events() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {filteredEvents.length === 0 ? (
+            {currentEvents.length === 0 ? (
               <div className="text-center py-8">
                 <Calendar className="h-12 w-12 text-geo-text-muted mx-auto mb-4" />
                 <p className="text-geo-text-muted">
@@ -166,7 +171,7 @@ export default function Events() {
                 </p>
               </div>
             ) : (
-              filteredEvents.map((event) => {
+              currentEvents.map((event) => {
                 const EventIcon = getEventIcon(event.type);
                 const eventColor = getEventColor(event.type);
                 const eventTypeText = getEventTypeText(event.type);
@@ -205,6 +210,31 @@ export default function Events() {
                   </div>
                 );
               })
+            )}
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-between pt-4 border-t border-geo-gray-light mt-6">
+                <span className="text-sm text-geo-text-muted">
+                  Mostrando {(currentPage - 1) * ITEMS_PER_PAGE + 1} a {Math.min(currentPage * ITEMS_PER_PAGE, filteredEvents.length)} de {filteredEvents.length} eventos
+                </span>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="p-2 bg-geo-darker border border-geo-gray-light rounded-md text-white hover:bg-geo-gray disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="p-2 bg-geo-darker border border-geo-gray-light rounded-md text-white hover:bg-geo-gray disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         </CardContent>
