@@ -15,6 +15,7 @@ import Analytics from "./pages/Analytics";
 import AILogs from "./pages/AILogs";
 import Billing from "./pages/Billing";
 import Configuration from "./pages/Soporte";
+import Profile from "./pages/Profile";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
@@ -43,6 +44,7 @@ const App = () => (
               <Route path="ia-logs" element={<AILogs />} />
               <Route path="facturacion" element={<Billing />} />
               <Route path="soporte" element={<Configuration />} />
+              <Route path="perfil" element={<Profile />} />
             </Route>
           </Routes>
         </BrowserRouter>

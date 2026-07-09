@@ -27,6 +27,7 @@ const navigationItems = [
   { name: 'Decisiones IA', href: '/ia-logs', icon: BrainCircuit },
   { name: 'Facturación', href: '/facturacion', icon: CreditCard },
   { name: 'Soporte', href: '/soporte', icon: HelpCircle },
+  { name: 'Mi Perfil', href: '/perfil', icon: User },
 ];
 
 export function Sidebar() {
